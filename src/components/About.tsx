@@ -1,118 +1,142 @@
 "use client";
 import { motion } from "framer-motion";
-import { Target, ShoppingCart, Cpu, ChevronRight } from "lucide-react";
 
-export default function About() {
-  const stats = [
-    { 
-      label: "Deployment_Ready", 
-      value: "LANDING PAGES", 
-      icon: <Target className="w-6 h-6 text-brand" />, // Increased icon size
-      desc: "High-conversion tactical entries." 
-    },
-    { 
-      label: "Scale_Protocol", 
-      value: "E-COMMERCE", 
-      icon: <ShoppingCart className="w-6 h-6 text-brand" />,
-      desc: "Secure digital storefronts."
-    },
-    { 
-      label: "Custom_Builds", 
-      value: "CUSTOM APPS", 
-      icon: <Cpu className="w-6 h-6 text-brand" />,
-      desc: "Bespoke software architecture."
-    },
-  ];
-
+export default function Contact() {
   return (
-    <section id="about" className="relative py-32 px-8 bg-black overflow-hidden">
-      <div className="max-w-7xl mx-auto relative z-10">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+    <section id="contact" className="relative py-32 px-8 bg-main-bg overflow-hidden border-t border-brand/20 transition-colors duration-500">
+      
+      {/* Background HUD Accents */}
+      <div className="absolute top-0 left-0 w-full h-full bg-tactical-grid opacity-20 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="relative z-10 max-w-6xl mx-auto pt-8 md:pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           
-          {/* Left Side: Text & Brand Image */}
-          <motion.div
+          {/* Left Side: Briefing */}
+          <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-10"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col justify-center space-y-10"
           >
-            {/* Label size increased to text-xs */}
-            <div className="flex items-center gap-4 font-mono text-xs tracking-[0.5em] text-brand uppercase font-bold">
+            <div className="inline-flex items-center gap-4">
               <span className="h-[2px] w-12 bg-brand"></span>
-              Origin: Olongapo_City_PH
+              <span className="font-mono text-xs tracking-[0.5em] text-brand uppercase italic animate-pulse font-bold">
+                Mission_Control_v.04
+              </span>
             </div>
-
-            {/* Reduced H2 from 7xl to 6xl for cleaner spacing */}
-            <h2 className="font-gaming text-5xl md:text-6xl font-light uppercase tracking-tighter text-white italic leading-[1.1]">
-              Tactical <span className="text-brand font-bold drop-shadow-[0_0_15px_rgba(255,0,0,0.3)]">Web Solutions</span> <br />
-              for Modern Brands.
+            
+            <h2 className="font-gaming text-6xl md:text-7xl font-light uppercase tracking-tighter text-main-text italic leading-[0.9]">
+              Request <br />
+              <motion.span 
+                whileHover={{ skewX: -10 }}
+                className="text-brand font-bold drop-shadow-[0_0_20px_var(--brand-glow)] cursor-default inline-block transition-all duration-300"
+              >
+                Extraction
+              </motion.span>
             </h2>
-
-            {/* Decorative Tactical Image */}
-            <div className="relative w-full h-80 border border-white/10 overflow-hidden group">
-               <div className="absolute inset-0 bg-brand/20 z-10 mix-blend-overlay group-hover:bg-transparent transition-all duration-700" />
-               <img 
-                src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070" 
-                alt="Cyber Security Terminal"
-                className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-105 transition-transform duration-700"
-               />
-               <div className="absolute bottom-4 left-4 z-20 font-mono text-[10px] tracking-widest text-white/60 bg-black/90 px-3 py-1.5 border border-white/10">
-                 IMG_SCAN_092.JPG // SYSTEM_VIEW
-               </div>
-            </div>
-
-            {/* Paragraph text increased to text-sm */}
-            <p className="font-mono text-sm text-white/60 leading-relaxed uppercase tracking-widest max-w-xl">
-              Based in Olongapo City, we engineer digital interfaces that demand attention. 
-              No generic templates—just high-performance, precision code built for the next generation of the web.
+            
+            <p className="font-mono text-sm text-main-text/50 leading-relaxed uppercase tracking-[0.2em] max-w-sm">
+              Current Status: <span className="text-main-text font-bold tracking-widest">Awaiting_Input</span> <br />
+              Location: <span className="text-main-text">Remote_Sector_04</span>
             </p>
+
+            <div className="pt-4 space-y-6">
+              <motion.div 
+                whileHover={{ x: 10 }}
+                className="group cursor-pointer inline-block"
+              >
+                <p className="font-mono text-xs text-brand mb-2 transition-all group-hover:tracking-widest font-bold">// COMM_LINK</p>
+                <p className="font-gaming text-3xl text-main-text transition-transform group-hover:text-brand">
+                  ops@core-studio.io
+                </p>
+              </motion.div>
+            </div>
           </motion.div>
 
-          {/* Right Side: Icon Grid */}
-          <div className="grid grid-cols-1 gap-8">
-            {stats.map((stat, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative flex items-center justify-between border border-white/5 bg-white/[0.02] p-10 hover:bg-brand/5 hover:border-brand/40 transition-all cursor-crosshair"
-              >
-                <div className="flex items-center gap-8">
-                  <div className="p-5 bg-white/5 border border-white/10 group-hover:border-brand/50 group-hover:bg-brand/10 transition-all">
-                    {stat.icon}
-                  </div>
-                  <div>
-                    {/* Label size increased to text-[10px] */}
-                    <p className="font-mono text-[10px] text-brand mb-2 tracking-[0.4em] font-bold">
-                      // {stat.label}
-                    </p>
-                    <h3 className="font-gaming text-3xl text-white font-bold tracking-tight group-hover:text-brand transition-colors">
-                      {stat.value}
-                    </h3>
-                    {/* Desc size increased to text-xs */}
-                    <p className="font-mono text-xs text-white/40 uppercase mt-2 italic tracking-wider">
-                      {stat.desc}
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight className="w-6 h-6 text-white/10 group-hover:text-brand transition-all group-hover:translate-x-3" />
+          {/* Right Side: Data Input Terminal */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
+          >
+            {/* HUD Corner Brackets */}
+            <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-brand/50" />
+            <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-brand/50" />
+            
+            <form className="bg-card backdrop-blur-xl border border-tactical-border p-8 md:p-12 space-y-8 relative overflow-hidden">
+              <div className="grid grid-cols-1 gap-8">
                 
-                {/* Tactical Corner Decoration */}
-                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/10 group-hover:border-brand transition-colors" />
-              </motion.div>
-            ))}
-          </div>
+                {/* Name Input */}
+                <div className="relative group">
+                  <label className="font-mono text-[10px] text-main-text/40 uppercase tracking-[0.3em] group-focus-within:text-brand transition-colors font-bold">
+                    Operator_Identity
+                  </label>
+                  <input 
+                    type="text" 
+                    required
+                    className="w-full bg-transparent border-b border-tactical-border py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 text-base"
+                    placeholder="ENTER NAME"
+                  />
+                  <div className="absolute bottom-0 left-0 h-[1px] bg-brand w-0 group-focus-within:w-full transition-all duration-500 shadow-[0_0_10px_var(--brand-glow)]" />
+                </div>
 
-        </div>
-      </div>
+                {/* Email Input */}
+                <div className="relative group">
+                  <label className="font-mono text-[10px] text-main-text/40 uppercase tracking-[0.3em] group-focus-within:text-brand transition-colors font-bold">
+                    Signal_Channel
+                  </label>
+                  <input 
+                    type="email" 
+                    required
+                    className="w-full bg-transparent border-b border-tactical-border py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 text-base"
+                    placeholder="EMAIL@PROTOCOL.IO"
+                  />
+                  <div className="absolute bottom-0 left-0 h-[1px] bg-brand w-0 group-focus-within:w-full transition-all duration-500 shadow-[0_0_10px_var(--brand-glow)]" />
+                </div>
 
-      {/* Background HUD Detail */}
-      <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none hidden lg:block">
-        <div className="font-mono text-9xl font-bold text-white uppercase tracking-tighter select-none">
-          ABOUT_US
+                {/* Message Input */}
+                <div className="relative group">
+                  <label className="font-mono text-[10px] text-main-text/40 uppercase tracking-[0.3em] group-focus-within:text-brand transition-colors font-bold">
+                    Objectives
+                  </label>
+                  <textarea 
+                    rows={2}
+                    className="w-full bg-transparent border-b border-tactical-border py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 resize-none text-base"
+                    placeholder="SPECIFY MISSION PARAMETERS..."
+                  />
+                  <div className="absolute bottom-0 left-0 h-[1px] bg-brand w-0 group-focus-within:w-full transition-all duration-500 shadow-[0_0_10px_var(--brand-glow)]" />
+                </div>
+
+              </div>
+
+              {/* Tactical Submit Button */}
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="group relative w-full h-14 bg-transparent border border-brand/50 flex items-center justify-center overflow-hidden transition-all hover:border-brand"
+              >
+                <div className="absolute inset-0 bg-brand translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+                
+                <span className="relative z-10 font-gaming font-bold uppercase italic text-brand group-hover:text-main-bg text-lg tracking-tighter transition-colors duration-300">
+                  Initiate_Transmission
+                </span>
+
+                <div className="absolute top-0 right-0 p-1">
+                   <div className="w-1.5 h-1.5 bg-brand group-hover:bg-main-bg transition-colors animate-pulse" />
+                </div>
+              </motion.button>
+
+              <p className="font-mono text-[9px] text-center text-main-text/30 uppercase tracking-[0.4em] font-bold">
+                Secure_Link_Established // No_Interception_Detected
+              </p>
+            </form>
+          </motion.div>
+
         </div>
       </div>
     </section>

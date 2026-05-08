@@ -9,19 +9,19 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-screen w-full flex flex-col justify-between p-8 md:p-16 overflow-hidden bg-black">
+    <section className="relative h-screen w-full flex flex-col justify-between p-8 md:p-16 overflow-hidden bg-main-bg transition-colors duration-500">
       
-      {/* Background with Zoom */}
+      {/* Background with Zoom - Increased brightness for light mode compatibility */}
       <motion.div 
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5 }}
-        className="absolute inset-0 z-0 bg-cover bg-center brightness-[0.2] grayscale contrast-125"
+        className="absolute inset-0 z-0 bg-cover bg-center brightness-[0.3] md:brightness-[0.2] grayscale contrast-125 data-[system=light]:brightness-[0.8] data-[system=light]:opacity-20"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2070')" }}
       />
 
-      {/* 1. TOP STATUS BAR - Added pt-4 to create breathing room from the top edge */}
-      <div className="relative z-20 pt-4 md:pt-8 flex justify-between items-start font-mono text-xs tracking-[0.3em] text-white/60 uppercase">
+      {/* 1. TOP STATUS BAR */}
+      <div className="relative z-20 pt-4 md:pt-8 flex justify-between items-start font-mono text-xs tracking-[0.3em] text-main-text/60 uppercase">
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -44,7 +44,8 @@ export default function Hero() {
           className="text-right flex flex-col items-end gap-1"
         >
           <span>Sector: Olongapo_PH</span>
-          <span className="text-green-400 italic font-medium">Uplink_Status: Stable</span>
+          {/* Status color adapts slightly for light mode legibility */}
+          <span className="text-green-500 dark:text-green-400 italic font-medium">Uplink_Status: Stable</span>
         </motion.div>
       </div>
 
@@ -53,18 +54,18 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         onClick={scrollToNext}
-        className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-8 cursor-pointer group"
+        className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-6 cursor-pointer group"
       >
-        <span className="font-mono text-xs uppercase tracking-[0.6em] [writing-mode:vertical-rl] text-white font-medium">
+        <span className="font-mono text-[10px] uppercase tracking-[0.6em] [writing-mode:vertical-rl] text-main-text font-medium opacity-70">
           Next_Module
         </span>
-        <div className="w-[1px] h-16 bg-white/40 group-hover:bg-brand group-hover:h-20 transition-all duration-500" />
+        <div className="w-[1px] h-12 bg-tactical-border group-hover:bg-brand transition-all duration-500" />
         <motion.div
-          animate={{ y: [0, 12, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="bg-white/5 border border-white/20 p-4 group-hover:border-brand group-hover:bg-brand transition-all shadow-lg"
+          className="bg-card border border-tactical-border p-2.5 group-hover:border-brand group-hover:bg-brand transition-all shadow-lg"
         >
-          <ChevronDown className="w-10 h-10 text-white group-hover:text-black transition-colors" />
+          <ChevronDown className="w-6 h-6 text-main-text group-hover:text-main-bg transition-colors" />
         </motion.div>
       </motion.div>
 
@@ -79,21 +80,20 @@ export default function Hero() {
           className="max-w-2xl"
         >
           <div className="flex items-center gap-4 font-mono text-xs tracking-[0.4em] text-brand uppercase mb-6 font-bold">
-            <span className="h-[2px] w-16 bg-brand"></span>
+            <span className="h-[2px] w-12 bg-brand"></span>
             Interface_Protocol_v4.0
           </div>
 
-          {/* Reduced size: md:text-7xl (down from 8xl) */}
-          <h1 className="font-gaming text-5xl md:text-7xl font-light leading-none uppercase tracking-tight text-white italic mb-8">
-            SQUAD <span className="text-brand font-bold drop-shadow-[0_0_20px_rgba(255,0,0,0.5)]">BASED</span> <br />
+          <h1 className="font-gaming text-5xl md:text-7xl font-light leading-none uppercase tracking-tight text-main-text italic mb-8">
+            SQUAD <span className="text-brand font-bold drop-shadow-[0_0_15px_var(--brand-glow)]">BASED</span> <br />
             <span className="opacity-90">OPERATIONS</span>
           </h1>
 
-          <div className="flex items-start gap-5">
-            <ArrowDownRight className="w-8 h-8 text-brand mt-1 flex-shrink-0" />
-            <p className="max-w-md font-mono text-sm text-white/70 leading-relaxed uppercase tracking-[0.15em]">
+          <div className="flex items-start gap-4">
+            <ArrowDownRight className="w-5 h-5 text-brand mt-1 flex-shrink-0 opacity-80" />
+            <p className="max-w-md font-mono text-sm text-main-text/70 leading-relaxed uppercase tracking-[0.15em]">
               Engineering high-frequency web experiences from Olongapo City. 
-              Built for tactical dominance and extreme performance in the digital space.
+              Built for tactical dominance and performance.
             </p>
           </div>
         </motion.div>
@@ -107,7 +107,7 @@ export default function Hero() {
           <motion.button 
             whileHover={{ scale: 1.05, x: -5 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative border-r-[6px] border-brand bg-white text-black px-14 py-6 font-gaming font-bold uppercase italic text-2xl transition-all hover:bg-brand hover:text-white shadow-[12px_12px_0px_rgba(255,0,0,0.2)]"
+            className="group relative border-r-[4px] border-brand bg-main-text text-main-bg px-10 py-4 font-gaming font-bold uppercase italic text-xl transition-all hover:bg-brand hover:text-white shadow-[8px_8px_0px_var(--tactical-border)]"
           >
             Engage_Now
           </motion.button>
@@ -115,8 +115,8 @@ export default function Hero() {
       </div>
 
       {/* Decorative HUD Elements */}
-      <div className="absolute inset-0 z-10 pointer-events-none border-[2px] border-white/5 m-6 md:m-10" />
-      <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_6px]" />
+      <div className="absolute inset-0 z-10 pointer-events-none border-[1px] border-tactical-border m-6 md:m-10" />
+      <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(var(--main-text)_50%,transparent_50%)] bg-[length:100%_6px] opacity-[0.03]" />
     </section>
   );
 }

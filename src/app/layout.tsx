@@ -2,7 +2,7 @@
 import { Oxanium, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer"; 
 
 const gamingFont = Oxanium({
   variable: "--font-gaming",
@@ -24,12 +24,31 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${gamingFont.variable} ${monoFont.variable} antialiased bg-black text-white flex flex-col min-h-screen`}>
+    <html lang="en" suppressHydrationWarning>
+      <body 
+        className={`
+          ${gamingFont.variable} 
+          ${monoFont.variable} 
+          antialiased 
+          bg-main-bg 
+          text-main-text 
+          flex 
+          flex-col 
+          min-h-screen 
+          transition-colors 
+          duration-500
+        `}
+      >
+        {/* Navigation Layer */}
         <Header />
-        <main className="flex-grow">
+
+        {/* Dynamic Content Layer */}
+        <main className="flex-grow pt-20"> 
+          {/* pt-20 accounts for the taller fixed header height */}
           {children}
         </main>
+
+        {/* Transmission End Layer */}
         <Footer />
       </body>
     </html>
