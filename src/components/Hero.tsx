@@ -4,12 +4,10 @@ import { ChevronDown, ArrowDownRight } from "lucide-react";
 
 export default function Hero() {
   const scrollToNext = () => {
-    // Ensure the element with id="about" exists in your Page.tsx
     const nextSection = document.getElementById("about");
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
     } else {
-      // Fallback: Scroll down one viewport height if ID isn't found
       window.scrollTo({
         top: window.innerHeight,
         behavior: "smooth",
@@ -50,10 +48,10 @@ export default function Hero() {
         >
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 bg-brand animate-pulse" />
-            System_Initialization // 2026
+            Warrior_Protocol_v4.0 // 2026
           </div>
           <div className="text-brand tracking-widest font-bold">
-            Targeting: Global_Market
+            Identity: Samurai_Web_Design
           </div>
         </motion.div>
         
@@ -64,11 +62,11 @@ export default function Hero() {
           className="text-right flex flex-col items-end gap-1"
         >
           <span>Sector: Olongapo_PH</span>
-          <span className="text-green-500 dark:text-green-400 italic font-bold">Status: Online</span>
+          <span className="text-green-500 dark:text-green-400 italic font-bold">Status: Combat_Ready</span>
         </motion.div>
       </div>
 
-      {/* 2. INTERACTIVE VERTICAL SCROLL - Fixed Click area */}
+      {/* 2. INTERACTIVE VERTICAL SCROLL */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -80,7 +78,7 @@ export default function Hero() {
           aria-label="Scroll to next section"
         >
           <span className="font-mono text-[11px] uppercase tracking-[0.6em] [writing-mode:vertical-rl] text-white font-bold transition-colors group-hover:text-brand">
-            Next_Module
+            The_Unfolding
           </span>
           <div className="w-[1px] h-16 bg-tactical-border group-hover:bg-brand transition-all duration-500" />
           <motion.div
@@ -103,19 +101,19 @@ export default function Hero() {
         >
           <div className="flex items-center gap-4 font-mono text-xs tracking-[0.4em] text-brand uppercase mb-6 font-black">
             <span className="h-[2px] w-12 bg-brand"></span>
-            Interface_Protocol_v4.0
+            Precision_Code // Sharp_Aesthetic
           </div>
 
           <h1 className="font-gaming text-6xl md:text-8xl font-light leading-none uppercase tracking-tighter text-white italic mb-8">
-            SQUAD <span className="text-brand font-bold drop-shadow-[0_0_15px_var(--brand-glow)]">BASED</span> <br />
-            <span className="opacity-100">OPERATIONS</span>
+            SAMURAI <span className="text-brand font-bold drop-shadow-[0_0_15px_var(--brand-glow)]">WEB</span> <br />
+            <span className="opacity-100">DESIGN</span>
           </h1>
 
           <div className="flex items-start gap-4">
             <ArrowDownRight className="w-6 h-6 text-brand mt-1 flex-shrink-0" />
             <p className="max-w-md font-mono text-[13px] text-white/90 font-bold leading-relaxed uppercase tracking-[0.2em]">
-              Engineering high-frequency web experiences from Olongapo City. 
-              Built for tactical dominance and performance.
+              Forging high-performance digital weapons from the heart of Olongapo. 
+              Built for honor, precision, and market dominance.
             </p>
           </div>
         </motion.div>
@@ -131,7 +129,7 @@ export default function Hero() {
             onClick={scrollToNext}
             className="group relative border-r-[6px] border-brand bg-brand text-white px-12 py-5 font-gaming font-black uppercase italic text-2xl transition-all hover:bg-brand/90 shadow-[10px_10px_0px_var(--tactical-border)]"
           >
-            Engage_Now
+            Enter_Dojo
           </motion.button>
         </motion.div>
       </div>
