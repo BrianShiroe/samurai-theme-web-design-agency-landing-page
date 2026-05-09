@@ -68,17 +68,19 @@ export default function Footer() {
             <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-brand transition-all group-hover:w-full shadow-[0_0_10px_var(--brand-glow)]" />
           </a>
           
-          {/* Contact - Keeps Simple Icon for fallback or you can update this to a local icon too */}
+          {/* Website Link - Replaces Contact */}
           <a 
-            href="mailto:contact@corestudio.agency" 
+            href="https://brianshiroe.vercel.app" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-3 text-main-text/70 hover:text-brand transition-all duration-300 relative group px-2 py-2"
           >
             <img 
-              src="https://cdn.simpleicons.org/minutemailer/white" 
-              alt="Mail" 
+              src="/icons/firefoxbrowser.svg" 
+              alt="Website" 
               className="w-5 h-5 dark:invert-0 invert opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all" 
             />
-            <span className="hidden lg:inline">Contact</span>
+            <span className="hidden lg:inline">Portfolio</span>
             <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-brand transition-all group-hover:w-full shadow-[0_0_10px_var(--brand-glow)]" />
           </a>
         </div>
