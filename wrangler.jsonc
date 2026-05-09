@@ -8,9 +8,9 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-agency-site",
+	"name": "samurai-theme-web-design-agency-landing-page",
 	"main": ".open-next/worker.js",
-	"compatibility_date": "2026-05-08",
+	"compatibility_date": "2026-05-09",
 	"compatibility_flags": [
 		"nodejs_compat",
 		"global_fetch_strictly_public"
@@ -29,7 +29,7 @@
 			// Self-reference service binding, the service name must match the worker name
 			// see https://opennext.js.org/cloudflare/caching
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "my-agency-site"
+			"service": "samurai-theme-web-design-agency-landing-page"
 		}
 	],
 	"observability": {
