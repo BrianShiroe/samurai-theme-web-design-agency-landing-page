@@ -38,17 +38,72 @@
   --color-main-text: var(--foreground);
   --color-card: var(--card-bg);
   --color-tactical-border: var(--border-alpha);
+  
+  /* Animation Utility */
+  --animate-spin-slow: spin 8s linear infinite;
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  transition: background-color 0.4s ease, color 0.4s ease;
+@layer base {
+  html {
+    /* Smooth Scroll for ID anchors */
+    scroll-behavior: smooth;
+    /* Prevent layout shift on scrollbar toggle */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+  }
+
+  /* Neobrutalist Tactical Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-alpha);
+    border: 2px solid var(--background);
+    transition: all 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-color);
+  }
+
+  /* Selection colors */
+  ::selection {
+    background-color: var(--brand-color);
+    color: #ffffff;
+  }
 }
 
-.bg-tactical-grid {
-  background-image: 
-    linear-gradient(to right, var(--brand-glow) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--brand-glow) 1px, transparent 1px);
-  background-size: 50px 50px;
+/* Utility Classes */
+@layer utilities {
+  .bg-tactical-grid {
+    background-image: 
+      linear-gradient(to right, var(--brand-glow) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--brand-glow) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 15px var(--brand-glow);
+  }
+
+  .border-glow {
+    box-shadow: 0 0 20px var(--brand-glow);
+  }
+}
+
+/* Base keyframes for spin-slow if not defined by default */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

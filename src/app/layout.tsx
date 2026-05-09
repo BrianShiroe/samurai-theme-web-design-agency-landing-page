@@ -3,6 +3,7 @@ import { Oxanium, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer"; 
+import SmoothScroll from "@/components/SmoothScroll";
 
 const gamingFont = Oxanium({
   variable: "--font-gaming",
@@ -39,17 +40,20 @@ export default function RootLayout({
           duration-500
         `}
       >
-        {/* Navigation Layer */}
-        <Header />
+        {/* Lenis Smooth Scroll Wrapper */}
+        <SmoothScroll>
+          {/* Navigation Layer */}
+          <Header />
 
-        {/* Dynamic Content Layer */}
-        <main className="flex-grow pt-20"> 
-          {/* pt-20 accounts for the taller fixed header height */}
-          {children}
-        </main>
+          {/* Dynamic Content Layer */}
+          <main className="flex-grow pt-20"> 
+            {/* pt-20 accounts for the taller fixed header height */}
+            {children}
+          </main>
 
-        {/* Transmission End Layer */}
-        <Footer />
+          {/* Transmission End Layer */}
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
