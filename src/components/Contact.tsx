@@ -87,7 +87,7 @@ export default function Contact() {
             <div className="inline-flex items-center gap-4">
               <span className="h-[2px] w-8 md:w-12 bg-brand"></span>
               <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] md:tracking-[0.5em] text-brand uppercase italic font-bold">
-                Engagement_Protocol_v.04
+                Contact Us
               </span>
             </div>
             
