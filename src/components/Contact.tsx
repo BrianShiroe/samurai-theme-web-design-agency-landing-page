@@ -1,27 +1,46 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 /**
  * Contact component for Samurai Web.
- * Features a mount guard to prevent Next.js 16 router initialization errors 
- * and integrated Web3Forms for Cloudflare-compatible emailing.
+ * Integrated with Web3Forms + hCaptcha + Honeypot Anti-Spam.
+ * Aligned to start with transparent security modules.
  */
 export default function Contact() {
   const [isMounted, setIsMounted] = useState(false);
   const [status, setStatus] = useState<"IDLE" | "SENDING" | "SUCCESS" | "ERROR">("IDLE");
+  
+  // Anti-Spam State
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const captchaRef = useRef<HCaptcha>(null);
 
-  // Prevent "Router action dispatched before initialization" by waiting for mount
+  // Prevent Next.js router initialization errors by waiting for client mount
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  const onHCaptchaChange = (token: string) => {
+    setCaptchaToken(token);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Verification Check
+    if (!captchaToken) {
+      alert("SECURITY_ALERT: Human verification required.");
+      return;
+    }
+
     setStatus("SENDING");
 
     const formData = new FormData(e.currentTarget);
-    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY || ""); 
+    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "");
+    
+    // Attach Captcha Token for server-side validation
+    formData.append("h-captcha-response", captchaToken);
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -29,11 +48,14 @@ export default function Contact() {
         body: formData,
       });
 
-      const data = await res.json() as { success: boolean }; 
+      const data = await res.json() as { success: boolean };
 
       if (data.success) {
         setStatus("SUCCESS");
         (e.target as HTMLFormElement).reset();
+        // Reset security protocol for next message
+        setCaptchaToken(null);
+        captchaRef.current?.resetCaptcha();
       } else {
         setStatus("ERROR");
       }
@@ -42,7 +64,7 @@ export default function Contact() {
     }
   };
 
-  if (!isMounted) return null; 
+  if (!isMounted) return null;
 
   return (
     <section id="contact" className="relative py-20 md:py-32 px-6 md:px-8 bg-main-bg overflow-hidden border-t border-brand/20 transition-colors duration-500">
@@ -85,13 +107,10 @@ export default function Contact() {
             </p>
 
             <div className="pt-2 md:pt-4 space-y-6">
-              <motion.div 
-                whileHover={{ x: 10 }}
-                className="group cursor-pointer inline-block"
-              >
+              <motion.div whileHover={{ x: 10 }} className="group cursor-pointer inline-block">
                 <p className="font-mono text-[10px] md:text-xs text-brand mb-1 md:mb-2 transition-all group-hover:tracking-widest font-bold">// SECURE_COMM_LINK</p>
                 <p className="font-gaming text-xl sm:text-2xl md:text-3xl text-main-text transition-transform group-hover:text-brand break-all">
-                  ops@samuraiweb.io
+                  brianshiroe@gmail.com
                 </p>
               </motion.div>
             </div>
@@ -110,12 +129,14 @@ export default function Contact() {
             
             <form 
               onSubmit={handleSubmit}
-              className="bg-card backdrop-blur-xl border border-tactical-border p-6 md:p-12 space-y-6 md:space-y-8 relative overflow-hidden"
+              className="bg-card backdrop-blur-xl border border-tactical-border p-6 md:p-12 space-y-6 md:space-y-8 relative overflow-hidden flex flex-col items-start"
             >
-              <div className="grid grid-cols-1 gap-6 md:gap-8">
-                
-                {/* Name Input */}
-                <div className="relative group">
+              {/* ANTI-SPAM 1: Honeypot (Invisible to users) */}
+              <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+
+              <div className="grid grid-cols-1 gap-6 md:gap-8 w-full text-left">
+                {/* Name */}
+                <div className="relative group flex flex-col items-start">
                   <label className="font-mono text-[9px] md:text-[10px] text-main-text/40 uppercase tracking-[0.2em] md:tracking-[0.3em] group-focus-within:text-brand transition-colors font-bold">
                     Organization_Contact
                   </label>
@@ -123,14 +144,14 @@ export default function Contact() {
                     name="name"
                     type="text" 
                     required
-                    className="w-full bg-transparent border-b border-tactical-border py-2 md:py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 text-sm md:text-base cursor-text"
+                    className="w-full bg-transparent border-b border-tactical-border py-2 md:py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 text-sm md:text-base cursor-text text-left"
                     placeholder="ENTER FULL NAME"
                   />
                   <div className="absolute bottom-0 left-0 h-[1px] bg-brand w-0 group-focus-within:w-full transition-all duration-500 shadow-[0_0_10px_var(--brand-glow)]" />
                 </div>
 
-                {/* Email Input */}
-                <div className="relative group">
+                {/* Email */}
+                <div className="relative group flex flex-col items-start">
                   <label className="font-mono text-[9px] md:text-[10px] text-main-text/40 uppercase tracking-[0.2em] md:tracking-[0.3em] group-focus-within:text-brand transition-colors font-bold">
                     Official_Signal_Channel
                   </label>
@@ -138,14 +159,14 @@ export default function Contact() {
                     name="email"
                     type="email" 
                     required
-                    className="w-full bg-transparent border-b border-tactical-border py-2 md:py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 text-sm md:text-base cursor-text"
+                    className="w-full bg-transparent border-b border-tactical-border py-2 md:py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 text-sm md:text-base cursor-text text-left"
                     placeholder="CORPORATE@EMAIL.COM"
                   />
                   <div className="absolute bottom-0 left-0 h-[1px] bg-brand w-0 group-focus-within:w-full transition-all duration-500 shadow-[0_0_10px_var(--brand-glow)]" />
                 </div>
 
-                {/* Message Input */}
-                <div className="relative group">
+                {/* Message */}
+                <div className="relative group flex flex-col items-start">
                   <label className="font-mono text-[9px] md:text-[10px] text-main-text/40 uppercase tracking-[0.2em] md:tracking-[0.3em] group-focus-within:text-brand transition-colors font-bold">
                     Project_Scope
                   </label>
@@ -153,21 +174,30 @@ export default function Contact() {
                     name="message"
                     rows={2}
                     required
-                    className="w-full bg-transparent border-b border-tactical-border py-2 md:py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 resize-none text-sm md:text-base cursor-text"
+                    className="w-full bg-transparent border-b border-tactical-border py-2 md:py-3 font-gaming text-main-text focus:outline-none focus:border-brand transition-all placeholder:text-main-text/10 resize-none text-sm md:text-base cursor-text text-left"
                     placeholder="OUTLINE YOUR DIGITAL OBJECTIVES..."
                   />
                   <div className="absolute bottom-0 left-0 h-[1px] bg-brand w-0 group-focus-within:w-full transition-all duration-500 shadow-[0_0_10px_var(--brand-glow)]" />
                 </div>
-
               </div>
 
-              {/* Tactical Submit Button - Added cursor-pointer */}
+              {/* ANTI-SPAM 2: hCaptcha (Aligned Start, Background Removed) */}
+              <div className="flex justify-start py-2 w-full overflow-hidden">
+                <HCaptcha
+                  sitekey="YOUR_HCAPTCHA_SITE_KEY" 
+                  onVerify={onHCaptchaChange}
+                  theme="dark"
+                  ref={captchaRef}
+                />
+              </div>
+
+              {/* Tactical Submit Button (Aligned Start) */}
               <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={status === "SENDING"}
                 type="submit"
-                className="group relative w-full h-12 md:h-14 bg-transparent border border-brand/50 flex items-center justify-center overflow-hidden transition-all hover:border-brand disabled:opacity-50 cursor-pointer"
+                className="group relative w-full sm:w-64 h-12 md:h-14 bg-transparent border border-brand/50 flex items-center justify-center overflow-hidden transition-all hover:border-brand disabled:opacity-50 cursor-pointer"
               >
                 <div className="absolute inset-0 bg-brand translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
                 
@@ -176,17 +206,17 @@ export default function Contact() {
                 </span>
 
                 <div className="absolute top-0 right-0 p-1">
-                    <div className={`w-1.5 h-1.5 bg-brand group-hover:bg-main-bg transition-colors ${status === "SENDING" ? "animate-ping" : "animate-pulse"}`} />
+                  <div className={`w-1.5 h-1.5 bg-brand group-hover:bg-main-bg transition-colors ${status === "SENDING" ? "animate-ping" : "animate-pulse"}`} />
                 </div>
               </motion.button>
 
               {status === "ERROR" && (
-                <p className="font-mono text-[10px] text-red-500 uppercase text-center font-bold tracking-widest">
+                <p className="font-mono text-[10px] text-red-500 uppercase text-left font-bold tracking-widest">
                   Signal_Lost // Link_Failed
                 </p>
               )}
 
-              <p className="font-mono text-[8px] md:text-[9px] text-center text-main-text/30 uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold">
+              <p className="font-mono text-[8px] md:text-[9px] text-left text-main-text/30 uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold w-full">
                 End-To-End_Encryption // Response_Time_24H
               </p>
             </form>
