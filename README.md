@@ -1,23 +1,46 @@
-# Samurai
+# Samurai Theme Web Design Agency Landing Page
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A polished, responsive landing page built with Next.js and Cloudflare Workers. This repository delivers a modern agency-style marketing site with smooth interactions, responsive sections, and reusable React components.
 
-## Getting Started
+## Live Demo
 
-Read the documentation at https://opennext.js.org/cloudflare.
+Experience the live site here:
 
-## Develop
+https://samurai-theme-web-design-agency-landing-page.brianshiroe.workers.dev/
 
-Run the Next.js development server:
+## Features
+
+- Responsive landing page layout
+- Hero section, services, projects, about, contact, and footer
+- Smooth scrolling navigation
+- Theme switcher with light/dark mode support
+- Cloudflare-compatible deployment setup
+
+## Tech Stack
+
+- Next.js 14+ with the App Router
+- React
+- TypeScript
+- Cloudflare Workers / OpenNext runtime
+- Tailwind CSS via `globals.css`
+
+## Installation
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+## Development
+
+Run the local development server:
 
 ```bash
 npm run dev
-# or similar package manager command
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open `http://localhost:3000` in your browser to view the site.
 
 ## Preview
 
@@ -25,23 +48,26 @@ Preview the application locally on the Cloudflare runtime:
 
 ```bash
 npm run preview
-# or similar package manager command
 ```
 
-## Deploy
+## Deployment
 
-Deploy the application to Cloudflare:
+Deploy the application to Cloudflare Workers:
 
 ```bash
 npm run deploy
-# or similar package manager command
 ```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app/` — app entry, layout, global styles, and pages
+- `src/components/` — reusable UI components for the landing page
+- `public/` — static assets, icons, and media
+- `next.config.ts` — Next.js configuration
+- `wrangler.jsonc` — Cloudflare Workers deployment config
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The live version is deployed on Cloudflare Workers and is configured using `wrangler.jsonc` and the OpenNext runtime.
+
+If you want to customize the landing page, update the component files under `src/components/` and the main page in `src/app/page.tsx`.
