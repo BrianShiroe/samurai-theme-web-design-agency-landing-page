@@ -1,47 +1,28 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 /**
  * Contact component for Samurai Web.
- * Integrated with Web3Forms + hCaptcha + Honeypot Anti-Spam.
- * Aligned to start with transparent security modules.
+ * Integrated with Web3Forms + Honeypot Anti-Spam.
+ * Aligned to start with a minimalist tactical aesthetic.
  */
 export default function Contact() {
   const [isMounted, setIsMounted] = useState(false);
   const [status, setStatus] = useState<"IDLE" | "SENDING" | "SUCCESS" | "ERROR">("IDLE");
-  
-  // Anti-Spam State
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const captchaRef = useRef<HCaptcha>(null);
 
   // Prevent Next.js router initialization errors by waiting for client mount
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const onHCaptchaChange = (token: string) => {
-    setCaptchaToken(token);
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Verification Check
-    if (!captchaToken) {
-      alert("SECURITY_ALERT: Human verification required.");
-      return;
-    }
-
     setStatus("SENDING");
 
     const formData = new FormData(e.currentTarget);
     formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "");
     
-    // Attach Captcha Token for server-side validation
-    formData.append("h-captcha-response", captchaToken);
-
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -53,9 +34,6 @@ export default function Contact() {
       if (data.success) {
         setStatus("SUCCESS");
         (e.target as HTMLFormElement).reset();
-        // Reset security protocol for next message
-        setCaptchaToken(null);
-        captchaRef.current?.resetCaptcha();
       } else {
         setStatus("ERROR");
       }
@@ -131,7 +109,7 @@ export default function Contact() {
               onSubmit={handleSubmit}
               className="bg-card backdrop-blur-xl border border-tactical-border p-6 md:p-12 space-y-6 md:space-y-8 relative overflow-hidden flex flex-col items-start"
             >
-              {/* ANTI-SPAM 1: Honeypot (Invisible to users) */}
+              {/* ANTI-SPAM: Honeypot (Invisible to users, keeps bots away) */}
               <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
 
               <div className="grid grid-cols-1 gap-6 md:gap-8 w-full text-left">
@@ -181,17 +159,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* ANTI-SPAM 2: hCaptcha (Aligned Start, Background Removed) */}
-              <div className="flex justify-start py-2 w-full overflow-hidden">
-                <HCaptcha
-                  sitekey="YOUR_HCAPTCHA_SITE_KEY" 
-                  onVerify={onHCaptchaChange}
-                  theme="dark"
-                  ref={captchaRef}
-                />
-              </div>
-
-              {/* Tactical Submit Button (Aligned Start) */}
+              {/* Tactical Submit Button */}
               <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
